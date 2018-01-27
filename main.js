@@ -34,7 +34,7 @@ var canvas = document.getElementById("canvas");
 			//1 = random via poisson process
 			//2 = regular intervals the same as response time
 			//3 = regular intervals half of response time
-			//you may use your own array of data here also, by setting callgen to 4
+			//you may use your own array of data here also, by setting callgen to 4 and adding the data to the times array
 			var generatenew = true; //whether new calls should be generated on restart
 
 			var mean = 4; //mean calls per hour for if callgen is 1
@@ -149,8 +149,8 @@ var canvas = document.getElementById("canvas");
 				if(time >= times[currentIncomingCall]){ //check for a new call
 					/*if(waitTimes.length !== 1){
 						if((ambulanceOccupiedUntil - time) > 0){
-						waitTimes.push((ambulanceOccupiedUntil - time) + (currentQueueLength * responseTime));
-						waitTimeAnalysis.total += (ambulanceOccupiedUntil - time) + (currentQueueLength * responseTime);
+							waitTimes.push((ambulanceOccupiedUntil - time) + (currentQueueLength * responseTime));
+							waitTimeAnalysis.total += (ambulanceOccupiedUntil - time) + (currentQueueLength * responseTime);
 						}
 						else{
 							waitTimes.push(currentQueueLength * responseTime);
