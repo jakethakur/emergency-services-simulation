@@ -34,13 +34,13 @@ var canvas = document.getElementById("canvas");
 			//1 = random via poisson process
 			//2 = regular intervals the same as response time
 			//3 = regular intervals half of response time
-			//you may use your own array of data here also, by setting callgen to 4 and adding the data to the times array
+			//you may use your own array of data here also, by setting callgen to 4
 			var generatenew = true; //whether new calls should be generated on restart
 
-			var mean = 2; //mean calls per hour for if callgen is 1
+			var mean = 4; //mean calls per hour for if callgen is 1
 			var responseTime = 0.5; //time taken to respond to a call
-			var ambulances = 1; //number of ambulances avaliable (not working currently)
-			var cases = 50; //number of calls (too many will go off the screen and will require altering of display)
+			var ambulances = 2; //number of ambulances avaliable
+			var cases = 100; //number of calls (too many will go off the screen and will require altering of display)
 			var ticklength = 0.05; //amount that a time tick lasts for (small values will cause more precision, but slower queue generation times)
 
 			var display = { //edit the graph
@@ -63,10 +63,15 @@ var canvas = document.getElementById("canvas");
 			};
 
 			var currentQueueLength = 0; //the current queue length
-			var ambulanceOccupiedUntil = 1000000000; //time the ambulance will be occupied until
-			var ambulanceOccupied = false; //whether the ambulance is currently occupied
+			var ambulancesOccupiedUntil = [1000000000]; //time the ambulances will be occupied until
+			var ambulancesOccupied = [false]; //whether the ambulance is currently occupied
 			var currentCall = 1; //array index of the next call the ambulance will deal with
 			var currentIncomingCall = 1; //array index of the next expected incoming call
+
+			for(var i = 0; i < ambulances; i++){
+				ambulancesOccupied.push(false);
+				ambulancesOccupiedUntil.push(1000000000);
+			}
 
 			fill(0, 0, 0);
 			textSize(11);
@@ -106,6 +111,20 @@ var canvas = document.getElementById("canvas");
 				}
 			}
 
+			var nextReturningambulance = function() {
+				var minimumTime = 10000000000;
+				for(var i = 0; i < ambulances; i++){
+					if(!ambulancesOccupied[i]){
+						minimumTime = 0;
+						break;
+					}
+					if(ambulancesOccupiedUntil[i] < minimumTime){
+						minimumTime = ambulancesOccupiedUntil[i];   
+					}
+				}
+				return minimumTime;
+			};
+
 			var draw = function() {
 				background(255, 255, 255);
 				time += ticklength; //increase time
@@ -126,8 +145,9 @@ var canvas = document.getElementById("canvas");
 				text("Average waiting time: " + waitTimeAnalysis.average,240,40); //wait time average
 				
 				//calculate queue
+				//to be updated...
 				if(time >= times[currentIncomingCall]){ //check for a new call
-					if(waitTimes.length !== 1){
+					/*if(waitTimes.length !== 1){
 						if((ambulanceOccupiedUntil - time) > 0){
 						waitTimes.push((ambulanceOccupiedUntil - time) + (currentQueueLength * responseTime));
 						waitTimeAnalysis.total += (ambulanceOccupiedUntil - time) + (currentQueueLength * responseTime);
@@ -140,20 +160,25 @@ var canvas = document.getElementById("canvas");
 					}
 					else{
 						waitTimes.push(0);
-					}
+					}*/
 					currentQueueLength++;
 					currentIncomingCall++;
 				}
 				
-				if(ambulanceOccupied && time >= ambulanceOccupiedUntil){ //check if an ambulance is free
-					ambulanceOccupied = false;
+				for(var i = 0; i < ambulances; i++){
+					if(ambulancesOccupied[i] && time >= ambulancesOccupiedUntil[i]){ //check if an ambulance is free
+						ambulancesOccupied[i] = false;
+					}
 				}
 				
-				if(!ambulanceOccupied && time >= times[currentCall]){ //check if ambulance can go out again
-					ambulanceOccupied = true;
-					currentCall++;
-					ambulanceOccupiedUntil = time + responseTime;
-					currentQueueLength--;
+				for(var i = 0; i < ambulances; i++){
+					if(!ambulancesOccupied[i] && time >= times[currentCall]){ //check if ambulance can go out again
+						ambulancesOccupied[i] = true;
+						currentCall++;
+						ambulancesOccupiedUntil[i] = time + responseTime;
+						currentQueueLength--;
+						break;
+					}
 				}
 				
 				queueLength.push(currentQueueLength); //push data about queue
@@ -164,6 +189,7 @@ var canvas = document.getElementById("canvas");
 					line(i*display.xaxis, 398 - queueLength[i] * display.yaxis, (i+1)*display.xaxis, 398 - queueLength[i+1] * display.yaxis);
 				}
 			};
+
 
         }
         if (typeof draw !== 'undefined') processing.draw = draw;
