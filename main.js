@@ -111,19 +111,39 @@ var canvas = document.getElementById("canvas");
 				}
 			}
 
-			var nextReturningambulance = function() {
+			var nextReturningAmbulance = function(repeat) {
 				var minimumTime = 10000000000;
-				for(var i = 0; i < ambulances; i++){
-					if(!ambulancesOccupied[i]){
-						minimumTime = 0;
+				var total = 0;
+				var ignore = [];
+				var min = 0; //array index of ambulance with minimum time
+				for(var z = 0; i < repeat; z++){
+					minimumTime = 10000000000;
+					for(var i = 0; i < ambulances; i++){
+						if(!ambulancesOccupied[i]){
+							minimumTime = 0;
+							min = i;
+							break;
+						}
+						if(ambulancesOccupiedUntil[i] < minimumTime && !contains(ignore, i)){
+							minimumTime = ambulancesOccupiedUntil[i] - time;
+							min = i;
+						}
+					}
+					ignore.push(min);
+					if(minimumTime == 10000000000){
 						break;
 					}
-					if(ambulancesOccupiedUntil[i] < minimumTime){
-						minimumTime = ambulancesOccupiedUntil[i];   
+					else{
+						total += minimumTime;
 					}
 				}
-				return minimumTime;
+				return total;
 			};
+				
+			var arrayContains = function(array, variable) {
+				//check whether array contains varaiable
+				return false;
+			}
 
 			var draw = function() {
 				background(255, 255, 255);
@@ -145,9 +165,8 @@ var canvas = document.getElementById("canvas");
 				text("Average waiting time: " + waitTimeAnalysis.average,240,40); //wait time average
 				
 				//calculate queue
-				//to be updated...
 				if(time >= times[currentIncomingCall]){ //check for a new call
-					/*if(waitTimes.length !== 1){
+					if(waitTimes.length !== 1){
 						if((ambulanceOccupiedUntil - time) > 0){
 							waitTimes.push((ambulanceOccupiedUntil - time) + (currentQueueLength * responseTime));
 							waitTimeAnalysis.total += (ambulanceOccupiedUntil - time) + (currentQueueLength * responseTime);
@@ -160,7 +179,7 @@ var canvas = document.getElementById("canvas");
 					}
 					else{
 						waitTimes.push(0);
-					}*/
+					}
 					currentQueueLength++;
 					currentIncomingCall++;
 				}
