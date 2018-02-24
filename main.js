@@ -38,9 +38,14 @@
 			var generatenew = true; //whether new calls should be generated on restart
 
 			var mean = 2; //mean calls per hour for if callgen is 1
+			
 			var responseTime = 0.5; //time taken to respond to a call
+			var responsePoisson = true; //whether poisson distribution should be used to calculate response time TO BE DONE
+			
 			var ambulances = 1; //number of ambulances avaliable (not working currently)
+			
 			var cases = 50; //number of calls (too many will go off the screen and will require altering of display)
+			
 			var ticklength = 0.05; //amount that a time tick lasts for (small values will cause more precision, but slower queue generation times)
 
 			var display = { //edit the graph
