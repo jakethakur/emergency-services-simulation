@@ -3,10 +3,23 @@
 <head>
 <title>Emergency services simulation</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/processing.js/1.4.8/processing.min.js"></script>
+<style>
+#data{
+	float: right;
+}
+
+.comments{
+	float: right;
+}
+</style>
 </head>
 <body>
 
 <canvas id="canvas" width="400" height="400" style="border:1px solid black;"></canvas>
+
+<!--<div id="data"></div>-->
+
+<p class="comments">The graph being drawn is queue length (y axis) against time (x axis)</p>
 
 <script src="main.js"></script>
 </body>

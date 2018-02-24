@@ -1,4 +1,4 @@
-var canvas = document.getElementById("canvas");
+	var canvas = document.getElementById("canvas");
     var processing = new Processing(canvas, function(processing) {
         processing.size(400, 400);
         processing.background(0xFFF);
@@ -67,6 +67,8 @@ var canvas = document.getElementById("canvas");
 			var ambulanceOccupied = false; //whether the ambulance is currently occupied
 			var currentCall = 1; //array index of the next call the ambulance will deal with
 			var currentIncomingCall = 1; //array index of the next expected incoming call
+			
+			//var dataEl = document.getElementById("data"); //element that displays data (slows down the program a lot; disabled)
 
 			fill(0, 0, 0);
 			textSize(11);
@@ -114,8 +116,10 @@ var canvas = document.getElementById("canvas");
 				//text(times,88,192);
 				
 				//display call time data
+				//dataEl.innerText = "";
 				for(var i = 0; i < cases + 1; i++){ //call number
 					text(i + display.timedisplaystart,5,times[i]*display.timedisplayresolution);
+					//dataEl.innerText += i + display.timedisplaystart + "___" + times[i + display.timedisplaystart] + "___" + waitTimes[i + display.timedisplaystart] + "\r\n";
 				}
 				for(var i = 0; i < cases + 1; i++){ //call time
 					text(times[i + display.timedisplaystart],25,times[i]*display.timedisplayresolution);
@@ -154,7 +158,7 @@ var canvas = document.getElementById("canvas");
 					currentCall++;
 					ambulanceOccupiedUntil = time + responseTime;
 					currentQueueLength--;
-				}
+				}	
 				
 				queueLength.push(currentQueueLength); //push data about queue
 				
