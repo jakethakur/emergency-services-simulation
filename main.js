@@ -113,70 +113,76 @@
 					}
 				}
 			}
+			
+			console.log(times);
 
 			var draw = function() {
-				background(255, 255, 255);
-				time += ticklength; //increase time
-				text(time,351,10); //display time at top-right of screen
-				//text(currentQueueLength,200,200);
-				//text(times,88,192);
-				
-				//display call time data
-				//dataEl.innerText = "";
-				for(var i = 0; i < cases + 1; i++){ //call number
-					text(i + display.timedisplaystart,5,times[i]*display.timedisplayresolution);
-					//dataEl.innerText += i + display.timedisplaystart + "___" + times[i + display.timedisplaystart] + "___" + waitTimes[i + display.timedisplaystart] + "\r\n";
-				}
-				for(var i = 0; i < cases + 1; i++){ //call time
-					text(times[i + display.timedisplaystart],25,times[i]*display.timedisplayresolution);
-				}
-				for(var i = 0; i < cases + 1; i++){ //wait times
-					text(waitTimes[i + display.timedisplaystart],75,times[i]*display.timedisplayresolution);
-				}
-				text("Average waiting time: " + waitTimeAnalysis.average,240,40); //wait time average display
-				text("Total downtime: " + downtime,240,55); //downtime display
-				
-				//calculate queue
-				if(time >= times[currentIncomingCall]){ //check for a new call
-					if(waitTimes.length !== 1){
-						if((ambulanceOccupiedUntil - time) > 0){
-						waitTimes.push((ambulanceOccupiedUntil - time) + (currentQueueLength * responseTime));
-						waitTimeAnalysis.total += (ambulanceOccupiedUntil - time) + (currentQueueLength * responseTime);
+				if(currentCall <= cases){
+					background(255, 255, 255);
+					time += ticklength; //increase time
+					text(time,351,10); //display time at top-right of screen
+					//text(currentCall,301,20); //display current call at top-right of screen
+					//text(currentQueueLength,200,200);
+					//text(times,88,192);
+					
+					//display call time data
+					//dataEl.innerText = "";
+					for(var i = 0; i < cases + 1; i++){ //call number
+						text(i + display.timedisplaystart,5,times[i]*display.timedisplayresolution);
+						//dataEl.innerText += i + display.timedisplaystart + "___" + times[i + display.timedisplaystart] + "___" + waitTimes[i + display.timedisplaystart] + "\r\n";
+					}
+					for(var i = 0; i < cases + 1; i++){ //call time
+						text(times[i + display.timedisplaystart],25,times[i]*display.timedisplayresolution);
+					}
+					for(var i = 0; i < cases + 1; i++){ //wait times
+						text(waitTimes[i + display.timedisplaystart],75,times[i]*display.timedisplayresolution);
+					}
+					text("Average waiting time: " + waitTimeAnalysis.average,240,40); //wait time average display
+					text("Total waiting time: " + waitTimeAnalysis.total,240,55); //wait time total display
+					text("Total downtime: " + downtime,240,80); //downtime display
+					
+					//calculate queue
+					if(time >= times[currentIncomingCall]){ //check for a new call
+						if(waitTimes.length !== 1){
+							if((ambulanceOccupiedUntil - time) > 0){
+							waitTimes.push((ambulanceOccupiedUntil - time) + (currentQueueLength * responseTime));
+							waitTimeAnalysis.total += (ambulanceOccupiedUntil - time) + (currentQueueLength * responseTime);
+							}
+							else{
+								waitTimes.push(currentQueueLength * responseTime);
+								waitTimeAnalysis.total += currentQueueLength * responseTime;
+							}
+							waitTimeAnalysis.average = waitTimeAnalysis.total / waitTimes.length;
 						}
 						else{
-							waitTimes.push(currentQueueLength * responseTime);
-							waitTimeAnalysis.total += currentQueueLength * responseTime;
+							waitTimes.push(0);
 						}
-						waitTimeAnalysis.average = waitTimeAnalysis.total / waitTimes.length;
+						currentQueueLength++;
+						currentIncomingCall++;
 					}
-					else{
-						waitTimes.push(0);
+					
+					if(ambulanceOccupied && time >= ambulanceOccupiedUntil){ //check if an ambulance is free
+						ambulanceOccupied = false;
 					}
-					currentQueueLength++;
-					currentIncomingCall++;
-				}
-				
-				if(ambulanceOccupied && time >= ambulanceOccupiedUntil){ //check if an ambulance is free
-					ambulanceOccupied = false;
-				}
-				
-				if(!ambulanceOccupied && time >= times[currentCall]){ //check if ambulance can go out again
-					ambulanceOccupied = true;
-					currentCall++;
-					ambulanceOccupiedUntil = time + responseTime;
-					currentQueueLength--;
-				}	
-				
-				if(!ambulanceOccupied){ //check if the ambulance has downtime (no call to respond to)
-					downtime += ticklength
-				}
-				
-				queueLength.push(currentQueueLength); //push data about queue
-				
-				//draw graph
-				for(var i = 0; i < display.repeat; i++){
-					//point(i, 400 - queueLength[i] * 50);
-					line(i*display.xaxis, 398 - queueLength[i] * display.yaxis, (i+1)*display.xaxis, 398 - queueLength[i+1] * display.yaxis);
+					
+					if(!ambulanceOccupied && time >= times[currentCall]){ //check if ambulance can go out again
+						ambulanceOccupied = true;
+						currentCall++;
+						ambulanceOccupiedUntil = time + responseTime;
+						currentQueueLength--;
+					}	
+					
+					if(!ambulanceOccupied){ //check if the ambulance has downtime (no call to respond to)
+						downtime += ticklength
+					}
+					
+					queueLength.push(currentQueueLength); //push data about queue
+					
+					//draw graph
+					for(var i = 0; i < display.repeat; i++){
+						//point(i, 400 - queueLength[i] * 50);
+						line(i*display.xaxis, 398 - queueLength[i] * display.yaxis, (i+1)*display.xaxis, 398 - queueLength[i+1] * display.yaxis);
+					}
 				}
 			};
 
