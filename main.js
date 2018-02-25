@@ -54,6 +54,8 @@
 				xaxis: 0.75,
 				yaxis: 25,
 			};
+			
+			var stopAfterTime = 24; //simulation time to stop simulation after (hours); leave at 0 to continue until all cases have been dealt with
 
 			//don't change any of the below variables
 
@@ -117,7 +119,7 @@
 			console.log(times);
 
 			var draw = function() {
-				if(currentCall <= cases){
+				if((currentCall <= cases && stopAfterTime == 0) || time > stopAfterTime && stopAfterTime > 0){
 					background(255, 255, 255);
 					time += ticklength; //increase time
 					text(time,351,10); //display time at top-right of screen
