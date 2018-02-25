@@ -40,7 +40,6 @@
 			var mean = 2; //mean calls per hour for if callgen is 1
 			
 			var responseTime = 0.5; //time taken to respond to a call
-			var responsePoisson = true; //whether poisson distribution should be used to calculate response time TO BE DONE
 			
 			var ambulances = 1; //number of ambulances avaliable (not working currently)
 			
@@ -66,6 +65,8 @@
 				total: 0,
 				average: 0,
 			};
+			
+			var downtime = 0; //count downtime of ambulance
 
 			var currentQueueLength = 0; //the current queue length
 			var ambulanceOccupiedUntil = 1000000000; //time the ambulance will be occupied until
@@ -132,7 +133,8 @@
 				for(var i = 0; i < cases + 1; i++){ //wait times
 					text(waitTimes[i + display.timedisplaystart],75,times[i]*display.timedisplayresolution);
 				}
-				text("Average waiting time: " + waitTimeAnalysis.average,240,40); //wait time average
+				text("Average waiting time: " + waitTimeAnalysis.average,240,40); //wait time average display
+				text("Total downtime: " + downtime,240,55); //downtime display
 				
 				//calculate queue
 				if(time >= times[currentIncomingCall]){ //check for a new call
@@ -164,6 +166,10 @@
 					ambulanceOccupiedUntil = time + responseTime;
 					currentQueueLength--;
 				}	
+				
+				if(!ambulanceOccupied){ //check if the ambulance has downtime (no call to respond to)
+					downtime += ticklength
+				}
 				
 				queueLength.push(currentQueueLength); //push data about queue
 				
