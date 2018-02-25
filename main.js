@@ -76,6 +76,8 @@
 			var currentCall = 1; //array index of the next call the ambulance will deal with
 			var currentIncomingCall = 1; //array index of the next expected incoming call
 			
+			var displayResults = true; //flag to display results once at the end
+			
 			//var dataEl = document.getElementById("data"); //element that displays data (slows down the program a lot; disabled)
 
 			fill(0, 0, 0);
@@ -119,7 +121,7 @@
 			console.log(times);
 
 			var draw = function() {
-				if((currentCall <= cases && stopAfterTime == 0) || time > stopAfterTime && stopAfterTime > 0){
+				if((currentCall <= cases && stopAfterTime == 0) || (stopAfterTime > time && stopAfterTime > 0)){
 					background(255, 255, 255);
 					time += ticklength; //increase time
 					text(time,351,10); //display time at top-right of screen
@@ -184,6 +186,14 @@
 					for(var i = 0; i < display.repeat; i++){
 						//point(i, 400 - queueLength[i] * 50);
 						line(i*display.xaxis, 398 - queueLength[i] * display.yaxis, (i+1)*display.xaxis, 398 - queueLength[i+1] * display.yaxis);
+					}
+				}
+				else if(stopAfterTime > 0){
+					if(displayResults){
+						console.log("calls handled " + (currentCall - 1));
+						console.log("calls incoming " + (currentIncomingCall - 1));
+						console.log("finishing queue " + currentQueueLength);
+						displayResults = false;
 					}
 				}
 			};
