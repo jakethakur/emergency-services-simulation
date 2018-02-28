@@ -3,32 +3,71 @@
 <head>
 <title>Emergency services simulation</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/processing.js/1.4.8/processing.min.js"></script>
-<style>
-#data{
-	float: right;
-}
-
-.comments{
-	width: 50%;
-	float: right;
-}
-</style>
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
 	
-<h1>The Simulation</h1>
+<h1>Emergency Services Simulation - Maths STEM</h1>
+<h2>Jake Thakur</h2>
 <canvas id="canvas" width="400" height="400" style="border:1px solid black;"></canvas>
 
 <!--<div id="data"></div>-->
 
 <div class="comments">
 <p>The graph being drawn is queue length (y axis) against time (x axis).</p>
-<p>In this example, I have used a base value of 2 calls per hour (distributed via poisson process), and a call response time of half an hour. The simulation stops after 24 simulation hours, and some extra results are posted to the console.</p>
+<p>In this example, I have used a base value of 2 calls per hour (distributed via poisson process), and a call response time of half an hour. The simulation stops after 24 simulation hours, and some extra results are posted to the console (f12).</p>
 <p>All of the variables for the simulation can be accessed and changed in the main.js source code.</p>
+<p><a href="./simulation.html">Simulation link</a></p>
 </div>
+
+<h2>Making the simulation</h2>
+<ul>
+<li>Programmed using ProcessingJS, a JavaScript library which makes it easier to create a visual display.</li>
+<li>Data generated via a poisson process.</li>
+<li>Most of the variable components of the simulation can be edited via variables within the source file.</li>
+<li>The simulation gives data such as incoming call times, queue lengths at those times, ambulance downtime, waiting times per person, and average waiting time.</li>
+</ul>
 	
-<h1>Collecting Data</h1>
-<p>To collect data, I made an <a href ="./data.xlsx">excel document</a> with the results of the simulation (which I ran about 20 times).</p>
+<h2>Collecting Data 1</h2>
+<p>I ran the simulation about 50 times, and collected the data on an <a href ="./data.xlsx">excel document</a>.</p>
+<p>The simulation was run using similar settings as the settings above - an average of 2 calls per hour, and a response time of half an hour.</p>
+
+<h2>Interesting Cases 1</h2>
+<div class="horizontal">
+	<figure>
+		<img src="./images/simulation1.png" alt="results" width="400px" height="400px">
+		<figcaption>One of the worst cases of the ~50 simulations.</figcaption>
+	</figure>
+	
+	<figure>
+		<img src="./images/simulation2.png" alt="results" width="400px" height="400px">
+		<figcaption>One of the best cases of the ~50 simulations.</figcaption>
+	</figure>
+</div>
+
+<h2>Downtime</h2>
+<p>As there are only (on average) 2 calls per hour, and a response time of half an hour, the simulation should theoretically be able to handle all of these calls without generating queue length.</p>
+<p>This obviously isn't true however, as some calls might be stacked closer to others. The reason that a queue would begin would be due to <strong>downtime</strong> of the ambulance.</p>
+<p>I measured the total downtime of the ambulance, and viewed what the link would be to the average waiting time per person.</p>
+<p>There was a problem with this, as the simulation initially ended after 50 calls had been dealt with. This meant that the downtime had very little to do with the average waiting time.</p>
+<p>To prove this, I took the ending time of each simulation and standardized it by subtracting it from a arbitrary value. It returned the same value each time.</p>
+<figure>
+	<img src="./images/downtime.png" alt="results">
+	<figcaption>Standardizing the downtime. The 0.05 disparity between some results is due to program lag.</figcaption>
+</figure>
+
+<h2>Collecting Data 2</h2>
+<p>I tried running the simulation again, but instead of it ending after 50 calls had been dealt with, it ended after 24 simulation hours.</p>
+<p>This would allow for the calls to be more realistic, rather than there being no calls after the first 50 had finished.</p>
+<p>I collected some overall results about average waiting time and downtime from this second data collection period.</p>
+<figure>
+	<img src="./images/results1.png" alt="results">
+	<figcaption>Some of the initial results from the spreadsheet</figcaption>
+</figure>
+
+<h2>Calls Incoming vs Calls Handled</h2>
+<p>I initially tried taking the calls handled from each case and seeing what the trend of that would be, in relation to some of the other properties.</p>
 
 <script src="main.js"></script>
 </body>

@@ -1,0 +1,13 @@
+body{
+	font-family: 'Roboto', sans-serif;
+}
+
+.comments{
+	width: 50%;
+	float: right;
+}
+
+.horizontal{
+    display: flex;
+    justify-content: center;
+}
