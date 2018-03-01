@@ -29,6 +29,10 @@
 <li>The simulation gives data such as incoming call times, queue lengths at those times, ambulance downtime, waiting times per person, and average waiting time.</li>
 </ul>
 
+<h2>Application to Real Life</h2>
+<p>The numbers used are unrealistic and arbitrary, but the general correlations can still be applied to real life.</p>
+<p>The numbers could be tweaked easily to provide an accurate representation of a specific location.</p>
+
 <h2>The Optimal Case</h2>
 <p>What would be the best case scenario for the emergency services?</p>
 <p>Reduce downtime; reduce average waiting time.</p>
@@ -83,7 +87,7 @@
 <p>Most of the downtime of the simulation comes from the beginning moments, where the initial call is being waited for.</p>
 <p>There is almost never downtime further on in the simulation, as the queue has normally had time by now to rack up, and would be dealt with rather than adding downtime.</p>
 
-<h2>Calls Incoming vs Calls Handled</h2>
+<h2>Calls Handled</h2>
 <p>I initially tried taking the calls handled from each case and seeing what the trend of that would be, in relation to some of the other properties.</p>
 <figure>
 	<img src="./images/callshandled.png" alt="results">
@@ -92,9 +96,38 @@
 <p>As you can see, this value was most of the time 46 for my first few cases.</p>
 <p>This is due to most of the cases only ever having time to deal with 46 calls. However, if the downtime was low enough, 47 calls would be able to be handled within the time.</p>
 
+<h2>Calls Incoming</h2>
+<p>The number of incoming calls ranged from 45 to 49, via the poisson process. You would expect about 47 on average (2 calls per hour for 24 hours)</p>
+<p>The number of calls incoming has a huge impact on the queue length.</p>
+<div class="horizontal">
+	<figure>
+		<img src="./images/lowcallsincoming.png" alt="results" width="400px" height="400px">
+		<figcaption>A low amount of calls incoming (45 here; 2 below average) results in a high downtime, and not necessarily a low queue (calls clumped together can still cause a queue).</figcaption>
+	</figure>
+	
+	<figure>
+		<img src="./images/simulation2.png" alt="results" width="400px" height="400px">
+		<figcaption>A high amount of calls incoming (49 here; 2 above average) results in a hard to deal with queue length, as clumping together of calls is more inevitable.</figcaption>
+	</figure>
+</div>
+<p>This correlation seems obvious, but perhaps not how much one extra call would effect the queue length by (for this particular simulation).</p>
+<div class="horizontal">
+	<figure>
+		<img src="./images/graph1.png" alt="results">
+		<figcaption>Average waiting time tends to increase a lot for each extra call.</figcaption>
+	</figure>
+	
+	<figure>
+		<img src="./images/graph2.png" alt="results">
+		<figcaption>Downtime tends to decrease a lot for each extra call. The only reason it doesn't reach 0 at the end is that there will always be some downtime at the beginning.</figcaption>
+	</figure>
+</div>
+
 <h2>Ideas for Future Additions/Experiments</h2>
 <ul>
 <li>Poisson process for response time.</li>
+<li>Multiple ambulances.</li>
+<li>Presentation tbd call "clumping"</li>
 </ul>
 
 <script src="main.js"></script>
