@@ -59,7 +59,7 @@
 	<figcaption>Some of the initial results from the spreadsheet.</figcaption>
 </figure>
 
-<h2>Interesting Cases 1</h2>
+<h2>Interesting Cases</h2>
 <div class="horizontal">
 	<figure>
 		<img src="./images/simulation1.png" alt="results" width="400px" height="400px">
@@ -74,7 +74,7 @@
 
 <h2>Downtime</h2>
 <p>As there are only (on average) 2 calls per hour, and a response time of half an hour, the simulation should theoretically be able to handle all of these calls without generating queue length.</p>
-<p>This obviously isn't true however, as some calls might be stacked closer to others (via the poisson process). The reason that a queue would begin might be due to <strong>downtime</strong> of the ambulance.</p>
+<p>This obviously isn't true however, as some calls might be clumped closer to others (via the poisson process). The reason that a queue would begin might be due to <strong>downtime</strong> of the ambulance.</p>
 <p>I measured the total downtime of the ambulance, and viewed what the link would be to the average waiting time per person.</p>
 <!--<p>There was a problem with this, as the simulation initially ended after 50 calls had been dealt with. This meant that the downtime had very little to do with the average waiting time for this case.</p>
 <p>To prove this, I took the ending time of each simulation and standardized it by subtracting it from a arbitrary value. It returned the same value each time.</p>
@@ -86,6 +86,26 @@
 <p>This would allow for the calls to be more realistic, rather than there being no calls after the first 50 had finished.</p>-->
 <p>Most of the downtime of the simulation comes from the beginning moments, where the initial call is being waited for.</p>
 <p>There is almost never downtime further on in the simulation, as the queue has normally had time by now to rack up, and would be dealt with rather than adding downtime.</p>
+<figure>
+	<img src="./images/graph3.png" alt="results">
+	<figcaption>Downtime doesn't seem to have an obvious impact!</figcaption>
+</figure>
+<p>I explored why downtime might not have an obvious impact later. One of the worst cases can have a low downtime, just because it is handling a lot of calls, or perhaps calls clumped closely!</p>
+
+<h2>Call "Clumping"</h2>
+<p>As downtime doesn't seem to have a correlation with the average waiting time, the "clumping" of calls seems to be the main problem.</p>
+<p>As you can see from the simulations below, when lots of calls come in at once the queue length increases a lot, even though they might all be dealt with in the same time as calls coming in gradually.
+<div class="horizontal">
+	<figure>
+		<img src="./images/simulation3.png" alt="results" width="400px" height="400px">
+		<figcaption>It might be hard to see, but when more calls come in at once, the queue length tends to increase. Even if they all get dealt with efficiently, whenever the queue length is high, the average wait time increases a lot.</figcaption>
+	</figure>
+	
+	<figure>
+		<img src="./images/simulation4.png" alt="results" width="400px" height="400px">
+		<figcaption>Both this and the simulation to the left have the same amount of calls, so why the difference in average waiting time? Likely a difference in the distribution of calls (clumping).</figcaption>
+	</figure>
+</div>
 
 <h2>Calls Handled</h2>
 <p>I initially tried taking the calls handled from each case and seeing what the trend of that would be, in relation to some of the other properties.</p>
@@ -106,7 +126,7 @@
 	</figure>
 	
 	<figure>
-		<img src="./images/simulation2.png" alt="results" width="400px" height="400px">
+		<img src="./images/highcallsincoming.png" alt="results" width="400px" height="400px">
 		<figcaption>A high amount of calls incoming (49 here; 2 above average) results in a hard to deal with queue length, as clumping together of calls is more inevitable.</figcaption>
 	</figure>
 </div>
@@ -123,11 +143,20 @@
 	</figure>
 </div>
 
+<h2>Downtime 2</h2>
+<p>So why does the downtime not have a direct correlation with average waiting time?</p>
+<p>Perhaps due to how calls incoming has a correlation with downtime.</p>
+<figure>
+	<img src="./images/graph2.png" alt="results">
+</figure>
+<p>Lower downtime could mean more calls incoming (causing more clumping), hence worse queues.</p>
+<p>At the same time, a lower downtime could mean a more efficient dealing of calls (due to less clumping), hence better queues.</p>
+
 <h2>Ideas for Future Additions/Experiments</h2>
 <ul>
 <li>Poisson process for response time.</li>
 <li>Multiple ambulances.</li>
-<li>Presentation tbd call "clumping"</li>
+<li>Longer simulations, with realistic distribution of calls (e.g: day/night)</li>
 </ul>
 
 <script src="main.js"></script>
