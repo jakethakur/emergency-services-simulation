@@ -44,7 +44,7 @@
 	</figure>
 	
 	<figure>
-		<img src="./images/optimal.png" alt="results" width="400px" height="400px">
+		<img src="./images/optimal.PNG" alt="results" width="400px" height="400px">
 		<figcaption>By making calls come in only as you can deal with them, the average waiting time and downtime are minimal.</figcaption>
 	</figure>
 </div>
@@ -55,7 +55,7 @@
 <p>I allowed the program to run for 24 simulation hours. The number of incoming calls ranged from 45 to 49, via the poisson process.</p>
 <p>I collected some overall results about average waiting time and downtime from this data collection period.</p>
 <figure>
-	<img src="./images/results1.png" alt="results">
+	<img src="./images/results1.PNG" alt="results">
 	<figcaption>Some of the initial results from the spreadsheet.</figcaption>
 </figure>
 
@@ -87,7 +87,7 @@
 <p>Most of the downtime of the simulation comes from the beginning moments, where the initial call is being waited for.</p>
 <p>There is almost never downtime further on in the simulation, as the queue has normally had time by now to rack up, and would be dealt with rather than adding downtime.</p>
 <figure>
-	<img src="./images/graph3.png" alt="results">
+	<img src="./images/graph3.PNG" alt="results">
 	<figcaption>Downtime doesn't seem to have an obvious impact!</figcaption>
 </figure>
 <p>I explored why downtime might not have an obvious impact later. One of the worst cases can have a low downtime, just because it is handling a lot of calls, or perhaps calls clumped closely!</p>
@@ -110,7 +110,7 @@
 <h2>Calls Handled</h2>
 <p>I initially tried taking the calls handled from each case and seeing what the trend of that would be, in relation to some of the other properties.</p>
 <figure>
-	<img src="./images/callshandled.png" alt="results">
+	<img src="./images/callshandled.PNG" alt="results">
 	<figcaption>The calls handled for the first few cases.</figcaption>
 </figure>
 <p>As you can see, this value was most of the time 46 for my first few cases.</p>
@@ -133,12 +133,12 @@
 <p>This correlation seems obvious, but perhaps not how much one extra call would effect the queue length by (for this particular simulation).</p>
 <div class="horizontal">
 	<figure>
-		<img src="./images/graph1.png" alt="results">
+		<img src="./images/graph1.PNG" alt="results">
 		<figcaption>Average waiting time tends to increase a lot for each extra call.</figcaption>
 	</figure>
 	
 	<figure>
-		<img src="./images/graph2.png" alt="results">
+		<img src="./images/graph2.PNG" alt="results">
 		<figcaption>Downtime tends to decrease a lot for each extra call. The only reason it doesn't reach 0 at the end is that there will always be some downtime at the beginning.</figcaption>
 	</figure>
 </div>
@@ -147,7 +147,7 @@
 <p>So why does the downtime not have a direct correlation with average waiting time?</p>
 <p>Perhaps due to how calls incoming has a correlation with downtime.</p>
 <figure>
-	<img src="./images/graph2.png" alt="results">
+	<img src="./images/graph2.PNG" alt="results">
 </figure>
 <p>Lower downtime could mean more calls incoming (causing more clumping), hence worse queues.</p>
 <p>At the same time, a lower downtime could mean a more efficient dealing of calls (due to less clumping), hence better queues.</p>
