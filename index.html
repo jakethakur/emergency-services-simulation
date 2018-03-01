@@ -21,17 +21,39 @@
 <p><a href="./simulation.html">Simulation link</a></p>
 </div>
 
-<h2>Making the simulation</h2>
+<h2>Making the Simulation</h2>
 <ul>
 <li>Programmed using ProcessingJS, a JavaScript library which makes it easier to create a visual display.</li>
 <li>Data generated via a poisson process.</li>
 <li>Most of the variable components of the simulation can be edited via variables within the source file.</li>
 <li>The simulation gives data such as incoming call times, queue lengths at those times, ambulance downtime, waiting times per person, and average waiting time.</li>
 </ul>
+
+<h2>The Optimal Case</h2>
+<p>What would be the best case scenario for the emergency services?</p>
+<p>Reduce downtime; reduce average waiting time.</p>
+<p>Note that all of the numbers in these simulations are arbitrary and unrealistic - they only simulate what the queue trend might be like.</p>
+<div class="horizontal">
+	<figure>
+		<img src="./images/notoptimal.png" alt="results" width="400px" height="400px">
+		<figcaption>Sending all of the calls in close to each other reduces the downtime, but makes the average waiting time very high. This might simulate a massive disaster, with a large influx of calls.</figcaption>
+	</figure>
 	
-<h2>Collecting Data 1</h2>
+	<figure>
+		<img src="./images/optimal.png" alt="results" width="400px" height="400px">
+		<figcaption>By making calls come in only as you can deal with them, the average waiting time and downtime are minimal.</figcaption>
+	</figure>
+</div>
+	
+<h2>Collecting Data</h2>
 <p>I ran the simulation about 50 times, and collected the data on an <a href ="./data.xlsx">excel document</a>.</p>
 <p>The simulation was run using similar settings as the settings above - an average of 2 calls per hour, and a response time of half an hour.</p>
+<p>I allowed the program to run for 24 simulation hours. The number of incoming calls ranged from 45 to 49, via the poisson process.</p>
+<p>I collected some overall results about average waiting time and downtime from this data collection period.</p>
+<figure>
+	<img src="./images/results1.png" alt="results">
+	<figcaption>Some of the initial results from the spreadsheet.</figcaption>
+</figure>
 
 <h2>Interesting Cases 1</h2>
 <div class="horizontal">
@@ -42,32 +64,38 @@
 	
 	<figure>
 		<img src="./images/simulation2.png" alt="results" width="400px" height="400px">
-		<figcaption>One of the best cases of the ~50 simulations.</figcaption>
+		<figcaption>One of the best cases of the ~50 simulations. How close is it to the optimal case?</figcaption>
 	</figure>
 </div>
 
 <h2>Downtime</h2>
 <p>As there are only (on average) 2 calls per hour, and a response time of half an hour, the simulation should theoretically be able to handle all of these calls without generating queue length.</p>
-<p>This obviously isn't true however, as some calls might be stacked closer to others. The reason that a queue would begin would be due to <strong>downtime</strong> of the ambulance.</p>
+<p>This obviously isn't true however, as some calls might be stacked closer to others (via the poisson process). The reason that a queue would begin might be due to <strong>downtime</strong> of the ambulance.</p>
 <p>I measured the total downtime of the ambulance, and viewed what the link would be to the average waiting time per person.</p>
-<p>There was a problem with this, as the simulation initially ended after 50 calls had been dealt with. This meant that the downtime had very little to do with the average waiting time.</p>
+<!--<p>There was a problem with this, as the simulation initially ended after 50 calls had been dealt with. This meant that the downtime had very little to do with the average waiting time for this case.</p>
 <p>To prove this, I took the ending time of each simulation and standardized it by subtracting it from a arbitrary value. It returned the same value each time.</p>
 <figure>
 	<img src="./images/downtime.png" alt="results">
 	<figcaption>Standardizing the downtime. The 0.05 disparity between some results is due to program lag.</figcaption>
 </figure>
-
-<h2>Collecting Data 2</h2>
 <p>I tried running the simulation again, but instead of it ending after 50 calls had been dealt with, it ended after 24 simulation hours.</p>
-<p>This would allow for the calls to be more realistic, rather than there being no calls after the first 50 had finished.</p>
-<p>I collected some overall results about average waiting time and downtime from this second data collection period.</p>
-<figure>
-	<img src="./images/results1.png" alt="results">
-	<figcaption>Some of the initial results from the spreadsheet</figcaption>
-</figure>
+<p>This would allow for the calls to be more realistic, rather than there being no calls after the first 50 had finished.</p>-->
+<p>Most of the downtime of the simulation comes from the beginning moments, where the initial call is being waited for.</p>
+<p>There is almost never downtime further on in the simulation, as the queue has normally had time by now to rack up, and would be dealt with rather than adding downtime.</p>
 
 <h2>Calls Incoming vs Calls Handled</h2>
 <p>I initially tried taking the calls handled from each case and seeing what the trend of that would be, in relation to some of the other properties.</p>
+<figure>
+	<img src="./images/callshandled.png" alt="results">
+	<figcaption>The calls handled for the first few cases.</figcaption>
+</figure>
+<p>As you can see, this value was most of the time 46 for my first few cases.</p>
+<p>This is due to most of the cases only ever having time to deal with 46 calls. However, if the downtime was low enough, 47 calls would be able to be handled within the time.</p>
+
+<h2>Ideas for Future Additions/Experiments</h2>
+<ul>
+<li>Poisson process for response time.</li>
+</ul>
 
 <script src="main.js"></script>
 </body>
