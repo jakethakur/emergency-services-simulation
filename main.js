@@ -118,6 +118,7 @@
 				}
 			}
 			
+			console.log("Array of call times:");
 			console.log(times);
 
 			var draw = function() {
@@ -190,6 +191,8 @@
 				}
 				else if(stopAfterTime > 0){
 					if(displayResults){
+						console.log("Array of waiting times:");
+						console.log(waitTimes);
 						console.log("calls handled " + (currentCall - 1));
 						console.log("calls incoming " + (currentIncomingCall - 1));
 						console.log("finishing queue " + currentQueueLength);
