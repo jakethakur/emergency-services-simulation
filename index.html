@@ -23,15 +23,15 @@
 
 <h2>Making the Simulation</h2>
 <ul>
-<li>Programmed using ProcessingJS, a JavaScript library which makes it easier to create a visual display.</li>
-<li>Data generated via a poisson process.</li>
-<li>Most of the variable components of the simulation can be edited via variables within the source file.</li>
-<li>The simulation gives data such as incoming call times, queue lengths at those times, ambulance downtime, waiting times per person, and average waiting time.</li>
+	<li>Programmed using ProcessingJS, a JavaScript library which makes it easier to create a visual display.</li>
+	<li>Data generated via a poisson process.</li>
+	<li>Most of the variable components of the simulation can be edited via variables within the source file.</li>
+	<li>The simulation gives data such as incoming call times, queue lengths at those times, ambulance downtime, waiting times per person, and average waiting time.</li>
 </ul>
 
 <h2>Application to Real Life</h2>
 <p>The numbers used are unrealistic and arbitrary, but the general correlations can still be applied to real life.</p>
-<p>The numbers could be tweaked easily to provide an accurate representation of a specific location.</p>
+<p>The numbers could be tweaked easily to provide a (hopefully) accurate representation of a specific location.</p>
 
 <h2>The Optimal Case</h2>
 <p>What would be the best case scenario for the emergency services?</p>
@@ -149,14 +149,16 @@
 <figure>
 	<img src="./images/graph2.PNG" alt="results">
 </figure>
-<p>Lower downtime could mean more calls incoming (causing more clumping), hence worse queues.</p>
+<p>Lower downtime could be due to more calls incoming (likely causing more clumping), hence worse queues.</p>
 <p>At the same time, a lower downtime could mean a more efficient dealing of calls (due to less clumping), hence better queues.</p>
 
 <h2>Ideas for Future Additions/Experiments</h2>
 <ul>
-<li>Poisson process for response time.</li>
-<li>Multiple ambulances.</li>
-<li>Longer simulations, with realistic distribution of calls (e.g: day/night)</li>
+	<li>Poisson process for response time.</li>
+	<li>Multiple ambulances.</li>
+	<li>Longer simulations, with realistic distribution of calls (e.g: day/night).</li>
+	<li>Information on where the amulance is at any given time.</li>
+	<li>What the ambulance should be doing in its downtime (driving randomly?).</li>
 </ul>
 
 <script src="main.js"></script>
