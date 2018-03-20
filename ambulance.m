@@ -2,15 +2,19 @@
 X = zeros (12000, 1); 
 Y = zeros (12000, 1);
 
+% set position of hospital (where ambulance will return to)
+hospitalPositionX = 80;
+hospitalPositionY = 80;
+
 Dist = zeros ();
 Dist2 = zeros();
-X(1,1) = [0]; % array of x values
-Y(1,1) = [0]; % array of y values
-Xvalue = 0; % current x value (starting position)
-Yvalue = 0; % current y value ('')
+X(1,1) = [hospitalPositionX]; % array of x values
+Y(1,1) = [hospitalPositionY]; % array of y values
+Xvalue = hospitalPositionX; % current x value (starting position)
+Yvalue = hospitalPositionY; % current y value (")
 clock = 0;
    N = 1;
-   Scale = 100; % size of population
+   Scale = 100; % size of populated area
    Prob = 0.1; % probability of an incoming call every hour
 
 for T = 2 : length(X);    
@@ -72,9 +76,10 @@ RN = round (5*R);
   Y(T,1) = 0;
   T = T+1
   
-  Xvalue =0;
-
- Yvalue =0;
+  % return to hospital
+  Xvalue = hospitalPositionX; 
+  Yvalue = hospitalPositionY;
+  
       end
   clock = 0;    
   end
