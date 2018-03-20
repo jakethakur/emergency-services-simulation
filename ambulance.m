@@ -1,16 +1,17 @@
-
-X = zeros (12000, 1);
+% fill array with empty values for program runtime
+X = zeros (12000, 1); 
 Y = zeros (12000, 1);
+
 Dist = zeros ();
 Dist2 = zeros();
-X(1,1) = [0];
-Y(1,1) = [0];
-Xvalue = 0;
-Yvalue = 0;
+X(1,1) = [0]; % array of x values
+Y(1,1) = [0]; % array of y values
+Xvalue = 0; % current x value (starting position)
+Yvalue = 0; % current y value ('')
 clock = 0;
    N = 1;
-   Scale = 100;
-   Prob = 0.1; //probability of an incoming call every hour
+   Scale = 100; % size of population
+   Prob = 0.1; % probability of an incoming call every hour
 
 for T = 2 : length(X);    
     
