@@ -1,6 +1,6 @@
 
-X = zeros (120000, 1);
-Y = zeros (120000, 1);
+X = zeros (12000, 1);
+Y = zeros (12000, 1);
 Dist = zeros ();
 Dist2 = zeros();
 X(1,1) = [0];
@@ -10,7 +10,7 @@ Yvalue = 0;
 clock = 0;
    N = 1;
    Scale = 100;
-   Prob = 1;
+   Prob = 0.1; //probability of an incoming call every hour
 
 for T = 2 : length(X);    
     
