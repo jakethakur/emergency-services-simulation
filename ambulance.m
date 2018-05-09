@@ -8,8 +8,10 @@ hospitalPositionY = 80;
 
 Dist = zeros();
 Dist2 = zeros();
-X(1, 1) = [hospitalPositionX]; % array of x values
-Y(1, 1) = [hospitalPositionY]; % array of y values
+Dist_Random = zeros();
+Dist_Nonrandom = zeros();
+X(1, 1) = hospitalPositionX; % array of x values
+Y(1, 1) = hospitalPositionY; % array of y values
 Xvalue = hospitalPositionX; % current x value (starting position)
 Yvalue = hospitalPositionY; % current y value (")
 clock = 0;
@@ -17,12 +19,12 @@ N = 1;
 Scale = 100; % size of populated area
 Prob = 0.1; % probability of an incoming call every hour
 
-for T = 2 : length(X);
+for T = 2 : length(X)
  
     R = rand;
     RN = round (5 * R);
  
-    if RN == 1;
+    if RN == 1
         if Xvalue > Scale
             X(T, 1) = X(T - 1, 1);
         else
@@ -32,7 +34,7 @@ for T = 2 : length(X);
     else X(T, 1) = X(T - 1, 1);
     end
  
-    if RN == 2;
+    if RN == 2
         if Xvalue < - Scale
             X(T, 1) = X(T - 1, 1);
         else
@@ -41,7 +43,7 @@ for T = 2 : length(X);
         end
     else X(T, 1) = X(T - 1, 1);
     end
-    if RN == 3;
+    if RN == 3
         if Yvalue > Scale
             Y(T, 1) = Y(T - 1, 1);
         else
@@ -50,7 +52,7 @@ for T = 2 : length(X);
         end
     else Y(T, 1) = Y(T - 1, 1);
     end
-    if RN == 4;
+    if RN == 4
         if Yvalue < - Scale
             Y(T, 1) = Y(T - 1, 1);
         else
@@ -60,9 +62,9 @@ for T = 2 : length(X);
     else Y(T, 1) = Y(T - 1, 1);
     end
     clock = clock + 1;
-    if clock == 61;
-        r = binornd(1, Prob)
-        if r > R;
+    if clock == 61
+        r = binornd(1, Prob);
+        if r > R
             position (1, 1) = (rand - .5) * 2 * Scale;
             position (1, 2) = (rand - .5) * 2 * Scale;
             X(T, 1) = position (1, 1);
@@ -73,7 +75,7 @@ for T = 2 : length(X);
             T = T + 1;
             X(T, 1) = 0;
             Y(T, 1) = 0;
-            T = T + 1
+            T = T + 1;
          
             % return to hospital
             Xvalue = hospitalPositionX;
@@ -95,5 +97,8 @@ hold on;
 plot(Dist_Nonrandom(:, 1));
 legend('Dist_Random', 'Dist_Nonrandom');
 
-mean(Dist_Random)
-mean(Dist_Nonrandom)
+fprintf('random distance: %f.\n',mean(Dist_Random));
+fprintf('nonrandom distance: %f.\n',mean(Dist_Nonrandom));
+
+%mean(Dist_Random);
+%mean(Dist_Nonrandom);
