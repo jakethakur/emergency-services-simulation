@@ -1,6 +1,6 @@
 # Emergency Services Simulation
 ### Maths STEM - Jake Thakur
 
-[Index page](https://jakethakur22.github.io/emergency-services-simulation/index.html)
+[Index page](https://jakethakur.github.io/emergency-services-simulation/index.html)
 
-[Simulation link](https://jakethakur22.github.io/emergency-services-simulation/simulation.html)
+[Simulation link](https://jakethakur.github.io/emergency-services-simulation/simulation.html)
